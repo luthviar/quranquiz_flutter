@@ -1,4 +1,4 @@
-package com.gotongroyong.quranquiz
+package com.gotongroyong.quizquran
 
 import android.os.Bundle
 

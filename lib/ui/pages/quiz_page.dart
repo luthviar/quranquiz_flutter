@@ -112,6 +112,7 @@ class _QuizPageState extends State<QuizPage> {
                   ),
                 ],
               ),
+              SizedBox(height: 80.0)
             ],
           ),
         ),
