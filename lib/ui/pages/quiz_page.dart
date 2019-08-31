@@ -41,73 +41,79 @@ class _QuizPageState extends State<QuizPage> {
           title: Text(widget.category.name),
           elevation: 0,
         ),
-        body: Stack(
-          children: <Widget>[
-            ClipPath(
-              clipper: WaveClipperTwo(),
-              child: Container(
-                decoration:
-                    BoxDecoration(color: Theme.of(context).primaryColor),
-                height: 200,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              // our code
+              Stack(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundColor: Colors.white70,
-                        child: Text("${_currentIndex + 1}"),
-                      ),
-                      SizedBox(width: 16.0),
-                      Expanded(
-                        child: Text(
-                          HtmlUnescape().convert(
-                              widget.questions[_currentIndex].question),
-                          textAlign: TextAlign.right,
-                          softWrap: true,
-                          style: _questionStyle,
-                        ),
-                      ),
-                    ],
+                  ClipPath(
+                    clipper: WaveClipperTwo(),
+                    child: Container(
+                      decoration:
+                          BoxDecoration(color: Theme.of(context).primaryColor),
+                      height: 400,
+                    ),
                   ),
-                  SizedBox(height: 20.0),
-                  Card(
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
-                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        ...options.map((option) => RadioListTile(
-                              title: Text(HtmlUnescape().convert("$option")),
-                              groupValue: _answers[_currentIndex],
-                              value: option,
-                              onChanged: (value) {
-                                setState(() {
-                                  _answers[_currentIndex] = option;
-                                });
-                              },
-                            )),
+                        Row(
+                          children: <Widget>[
+                            CircleAvatar(
+                              backgroundColor: Colors.white70,
+                              child: Text("${_currentIndex + 1}"),
+                            ),
+                            SizedBox(width: 16.0),
+                            Expanded(
+                              child: Text(
+                                HtmlUnescape().convert(
+                                    widget.questions[_currentIndex].question),
+                                textAlign: TextAlign.right,
+                                softWrap: true,
+                                style: _questionStyle,
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 20.0),
+                        Card(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: <Widget>[
+                              ...options.map((option) => RadioListTile(
+                                    title:
+                                        Text(HtmlUnescape().convert("$option")),
+                                    groupValue: _answers[_currentIndex],
+                                    value: option,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _answers[_currentIndex] = option;
+                                      });
+                                    },
+                                  ))
+                            ],
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.bottomCenter,
+                          child: RaisedButton(
+                            child: Text(
+                                _currentIndex == (widget.questions.length - 1)
+                                    ? "Submit"
+                                    : "Next"),
+                            onPressed: _nextSubmit,
+                          ),
+                        ),
+                        SizedBox(height: 50.0),
                       ],
                     ),
                   ),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.bottomCenter,
-                      child: RaisedButton(
-                        child: Text(
-                            _currentIndex == (widget.questions.length - 1)
-                                ? "Submit"
-                                : "Next"),
-                        onPressed: _nextSubmit,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 50.0),
                 ],
               ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
